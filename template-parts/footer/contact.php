@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$phone   = get_theme_mod( 'buity_footer_phone', '' );
-$email   = get_theme_mod( 'buity_footer_email', '' );
-$address = get_theme_mod( 'buity_footer_address', '' );
+$phone   = (string) buity_get_option( 'contact_phone' );
+$email   = (string) buity_get_option( 'contact_email' );
+$address = (string) buity_get_option( 'contact_address' );
 
 if ( ! $phone && ! $email && ! $address ) {
 	return;

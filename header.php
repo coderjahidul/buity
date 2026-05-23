@@ -53,6 +53,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="site-header__mobile-panel" id="primary-navigation">
 		<?php get_template_part( 'template-parts/header/navigation' ); ?>
-		<?php get_template_part( 'template-parts/header/search-form' ); ?>
+		<?php
+		set_query_var( 'buity_search_context', 'mobile' );
+		get_template_part( 'template-parts/header/search-form' );
+		set_query_var( 'buity_search_context', 'desktop' );
+		?>
 	</div>
 </header>

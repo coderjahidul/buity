@@ -1,0 +1,25 @@
+.buity-theme-settings__tabs {
+	margin-bottom: 1.5rem;
+}
+
+.buity-media-field__preview {
+	margin-bottom: 0.5rem;
+	min-height: 40px;
+}
+
+.buity-media-field__preview img {
+	max-width: 240px;
+	height: auto;
+	display: block;
+	border: 1px solid #c3c4c7;
+	background: #fff;
+	padding: 4px;
+}
+
+.buity-media-field__actions .hidden {
+	display: none;
+}
+
+.buity-theme-settings .form-table th {
+	width: 220px;
+}

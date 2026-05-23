@@ -9,23 +9,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$about = get_theme_mod( 'buity_footer_about', __( 'Your trusted beauty & personal care destination in Bangladesh.', 'buity-theme' ) );
+$about = (string) buity_get_option( 'footer_description' ); 
 
 $social = array(
-	'facebook'  => get_theme_mod( 'buity_social_facebook', '' ),
-	'instagram' => get_theme_mod( 'buity_social_instagram', '' ),
-	'youtube'   => get_theme_mod( 'buity_social_youtube', '' ),
-	'whatsapp'  => get_theme_mod( 'buity_social_whatsapp', '' ),
+	'facebook'  => (string) buity_get_option( 'social_facebook' ),
+	'instagram' => (string) buity_get_option( 'social_instagram' ),
+	'youtube'   => (string) buity_get_option( 'social_youtube' ),
+	'whatsapp'  => buity_get_whatsapp_url(),
 );
 $social = array_filter( $social );
 ?>
 <div class="site-footer__col site-footer__col--about">
 	<div class="site-footer__logo">
-		<?php if ( has_custom_logo() ) : ?>
-			<?php the_custom_logo(); ?>
-		<?php else : ?>
-			<span class="site-footer__logo-text"><?php bloginfo( 'name' ); ?></span>
-		<?php endif; ?>
+		<?php buity_the_logo( 'footer' ); ?>
 	</div>
 	<?php if ( $about ) : ?>
 		<p class="site-footer__about-text"><?php echo esc_html( $about ); ?></p>

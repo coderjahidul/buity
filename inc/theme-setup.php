@@ -116,6 +116,24 @@ function buity_footer_legal_fallback() {
 }
 
 /**
+ * Footer useful links fallback.
+ */
+function buity_footer_useful_links_fallback() {
+	$links = array(
+		array( home_url( '/faq/' ), __( 'FAQ', 'buity-theme' ) ),
+		array( home_url( '/contact/' ), __( 'Support', 'buity-theme' ) ),
+		array( home_url( '/contact/' ), __( 'Contact Us', 'buity-theme' ) ),
+	);
+	?>
+	<ul class="site-footer__links">
+		<?php foreach ( $links as $link ) : ?>
+			<li><a href="<?php echo esc_url( $link[0] ); ?>"><?php echo esc_html( $link[1] ); ?></a></li>
+		<?php endforeach; ?>
+	</ul>
+	<?php
+}
+
+/**
  * Footer quick links fallback.
  */
 function buity_footer_quick_links_fallback() {

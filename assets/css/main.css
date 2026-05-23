@@ -147,6 +147,23 @@
 	cursor: pointer;
 }
 
+.product-search--mobile {
+	max-width: none;
+	margin-top: 1rem;
+}
+
+.product-search--mobile .product-search__submit {
+	background: var(--color-magenta);
+	color: #fff;
+	padding: 0.6rem 1.25rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.product-search__submit-text {
+	line-height: 1;
+}
+
 /* Header actions */
 .header-actions {
 	display: flex;

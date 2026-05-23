@@ -15,6 +15,7 @@ define( 'BUITY_THEME_URI', get_template_directory_uri() );
 
 $buity_includes = array(
 	'theme-setup.php',
+	'theme-options.php',
 	'enqueue.php',
 	'woocommerce.php',
 	'home-helpers.php',

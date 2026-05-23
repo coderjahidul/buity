@@ -10,14 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $social = array(
-	'facebook'  => array( 'label' => 'Facebook', 'url' => get_theme_mod( 'buity_social_facebook', '' ) ),
-	'instagram' => array( 'label' => 'Instagram', 'url' => get_theme_mod( 'buity_social_instagram', '' ) ),
-	'whatsapp'  => array( 'label' => 'WhatsApp', 'url' => get_theme_mod( 'buity_social_whatsapp', '' ) ),
+	'facebook'  => array( 'label' => 'Facebook', 'url' => (string) buity_get_option( 'social_facebook' ) ),
+	'instagram' => array( 'label' => 'Instagram', 'url' => (string) buity_get_option( 'social_instagram' ) ),
+	'whatsapp'  => array( 'label' => 'WhatsApp', 'url' => buity_get_whatsapp_url() ),
 );
 
-$social = array_filter( $social, function ( $item ) {
-	return ! empty( $item['url'] );
-} );
+$social = array_filter(
+	$social,
+	function ( $item ) {
+		return ! empty( $item['url'] );
+	}
+);
 
 if ( empty( $social ) ) {
 	return;
@@ -26,7 +29,7 @@ if ( empty( $social ) ) {
 <div class="site-footer__col site-footer__col--social">
 	<h2 class="site-footer__heading"><?php esc_html_e( 'Follow Us', 'buity-theme' ); ?></h2>
 	<ul class="site-footer__social">
-		<?php foreach ( $social as $key => $item ) : ?>
+		<?php foreach ( $social as $item ) : ?>
 			<li>
 				<a href="<?php echo esc_url( $item['url'] ); ?>" target="_blank" rel="noopener noreferrer">
 					<?php echo esc_html( $item['label'] ); ?>

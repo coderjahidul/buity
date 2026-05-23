@@ -50,7 +50,7 @@ $is_product_search = isset( $_GET['post_type'] ) && 'product' === $_GET['post_ty
 
 			<?php the_posts_pagination(); ?>
 		<?php else : ?>
-			<p><?php esc_html_e( 'No products matched your search.', 'buity-theme' ); ?></p>
+			<p><?php echo esc_html( (string) buity_get_option( 'search_no_results' ) ); ?></p>
 			<?php get_template_part( 'template-parts/header/search-form' ); ?>
 		<?php endif; ?>
 	</div>

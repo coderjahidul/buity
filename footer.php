@@ -32,14 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 			</nav>
 			<p class="site-footer__copyright">
-				<?php
-				printf(
-					/* translators: 1: year, 2: site name */
-					esc_html__( 'Copyright © %1$s %2$s. All rights reserved.', 'buity-theme' ),
-					esc_html( gmdate( 'Y' ) ),
-					esc_html( get_bloginfo( 'name' ) )
-				);
-				?>
+				<?php echo wp_kses_post( buity_get_copyright_html() ); ?>
 			</p>
 		</div>
 	</div>
