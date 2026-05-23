@@ -91,7 +91,8 @@ function buity_home_section_product_args( $section ) {
 		case 'category':
 			$cat_id = (int) ( $section['category_id'] ?? 0 );
 			if ( $cat_id > 0 ) {
-				$args['category'] = array( $cat_id );
+				// WooCommerce `category` expects slugs; use term IDs via product_category_id.
+				$args['product_category_id'] = array( $cat_id );
 			}
 			break;
 		case 'popular':

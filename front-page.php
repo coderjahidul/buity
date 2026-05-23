@@ -11,7 +11,6 @@ get_header();
 <main id="primary" class="site-main site-main--home">
 	<?php get_template_part( 'template-parts/home/hero' ); ?>
 	<?php get_template_part( 'template-parts/home/categories-grid' ); ?>
-	<?php get_template_part( 'template-parts/home/top-brands' ); ?>
 
 	<?php
 	$sections = buity_get_home_sections();
