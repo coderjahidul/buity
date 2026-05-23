@@ -1,0 +1,102 @@
+/* Single product page */
+
+.single-product-layout__grid {
+	display: grid;
+	gap: 2rem;
+	margin-bottom: 3rem;
+}
+
+.single-product-layout__gallery .woocommerce-product-gallery {
+	margin-bottom: 0;
+}
+
+.single-product-layout__summary .product_title {
+	margin: 0 0 0.75rem;
+	font-size: 1.75rem;
+}
+
+.single-product-layout__summary .price {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--color-primary);
+	margin-bottom: 1rem;
+}
+
+.single-product-layout__summary .woocommerce-product-details__short-description {
+	margin-bottom: 1.5rem;
+	color: var(--color-text-muted);
+}
+
+.single-product-layout__summary form.cart {
+	margin-bottom: 1.5rem;
+}
+
+.single-product-layout__summary .quantity {
+	margin-right: 0.5rem;
+}
+
+.single-product-layout__summary .quantity input {
+	width: 4rem;
+	padding: 0.5rem;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+}
+
+.single-product-layout__summary .single_add_to_cart_button {
+	padding: 0.75rem 2rem;
+	background: var(--color-primary);
+	color: #fff;
+	border: none;
+	border-radius: var(--radius);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.single-product-layout__summary .single_add_to_cart_button:hover {
+	background: var(--color-primary-dark);
+}
+
+.single-product-layout__tabs .woocommerce-tabs {
+	margin-top: 2rem;
+}
+
+.single-product-layout__tabs .tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0 0 1rem;
+	padding: 0;
+	list-style: none;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.single-product-layout__tabs .tabs li a {
+	display: block;
+	padding: 0.75rem 1rem;
+	color: var(--color-text-muted);
+	font-weight: 500;
+}
+
+.single-product-layout__tabs .tabs li.active a {
+	color: var(--color-primary);
+	border-bottom: 2px solid var(--color-primary);
+	margin-bottom: -1px;
+}
+
+.related.products {
+	margin-top: 3rem;
+	padding-top: 2rem;
+	border-top: 1px solid var(--color-border);
+}
+
+.related.products > h2 {
+	text-align: center;
+	margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.single-product-layout__grid {
+		grid-template-columns: 1fr 1fr;
+		align-items: start;
+	}
+}
