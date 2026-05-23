@@ -23,18 +23,21 @@ $cart_count   = class_exists( 'WooCommerce' ) && WC()->cart ? WC()->cart->get_ca
 		<?php esc_html_e( 'Login', 'buity-theme' ); ?>
 	</a>
 
-	<a class="header-actions__bag" href="<?php echo esc_url( $cart_url ); ?>">
-		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-			<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-			<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-		</svg>
-		<span><?php esc_html_e( 'BAG', 'buity-theme' ); ?></span>
-		<?php
-		if ( function_exists( 'buity_cart_count_markup' ) ) {
-			echo buity_cart_count_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		} elseif ( $cart_count > 0 ) {
-			echo '<span class="buity-cart-count buity-cart-count--has-items">' . esc_html( (string) $cart_count ) . '</span>';
-		}
-		?>
-	</a>
+	<div class="header-cart" id="header-cart">
+		<a class="header-actions__bag" href="<?php echo esc_url( $cart_url ); ?>">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+				<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+				<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+			</svg>
+			<span><?php esc_html_e( 'BAG', 'buity-theme' ); ?></span>
+			<?php
+			if ( function_exists( 'buity_cart_count_markup' ) ) {
+				echo buity_cart_count_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			} elseif ( $cart_count > 0 ) {
+				echo '<span class="buity-cart-count buity-cart-count--has-items">' . esc_html( (string) $cart_count ) . '</span>';
+			}
+			?>
+		</a>
+		<?php get_template_part( 'template-parts/header/mini-cart' ); ?>
+	</div>
 </div>

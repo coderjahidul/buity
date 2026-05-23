@@ -152,6 +152,10 @@
 	padding-top: 0.35rem;
 }
 
+.product-card .added_to_cart {
+	display: none !important;
+}
+
 .product-card__cart-btn,
 .product-card__actions .button {
 	display: inline-flex !important;
@@ -230,4 +234,8 @@
 	.woocommerce ul.products {
 		grid-template-columns: repeat(4, 1fr);
 	}
+}
+
+.woocommerce:where(body:not(.woocommerce-uses-block-theme)) .woocommerce-breadcrumb {
+	display: none;
 }

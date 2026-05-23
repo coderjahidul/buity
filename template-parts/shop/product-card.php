@@ -49,9 +49,11 @@ $image_id  = $product->get_image_id();
 
 		<div class="product-card__actions">
 			<?php
-			woocommerce_template_loop_add_to_cart( array(
-				'class' => 'product-card__cart-btn add_to_cart_button',
-			) );
+			woocommerce_template_loop_add_to_cart(
+				array(
+					'class' => 'product-card__cart-btn',
+				)
+			);
 			?>
 		</div>
 	</div>

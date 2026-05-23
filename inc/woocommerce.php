@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once BUITY_THEME_DIR . '/inc/woocommerce-single.php';
+
 /**
  * WooCommerce setup after theme setup.
  */
@@ -51,7 +53,7 @@ add_filter( 'loop_shop_columns', 'buity_loop_columns' );
  * @return array
  */
 function buity_related_products_args( $args ) {
-	$args['posts_per_page'] = 4;
+	$args['posts_per_page'] = 10;
 	$args['columns']        = 4;
 	return $args;
 }
@@ -61,7 +63,10 @@ add_filter( 'woocommerce_output_related_products_args', 'buity_related_products_
  * Open main content wrapper.
  */
 function buity_woocommerce_wrapper_before() {
-	echo '<main id="primary" class="site-main site-main--shop"><div class="container">';
+	echo '<main id="primary" class="site-main site-main--shop">';
+	if ( ! is_product() ) {
+		echo '<div class="container">';
+	}
 }
 add_action( 'woocommerce_before_main_content', 'buity_woocommerce_wrapper_before', 5 );
 
@@ -69,7 +74,10 @@ add_action( 'woocommerce_before_main_content', 'buity_woocommerce_wrapper_before
  * Close main content wrapper.
  */
 function buity_woocommerce_wrapper_after() {
-	echo '</div></main>';
+	if ( ! is_product() ) {
+		echo '</div>';
+	}
+	echo '</main>';
 }
 add_action( 'woocommerce_after_main_content', 'buity_woocommerce_wrapper_after', 50 );
 
