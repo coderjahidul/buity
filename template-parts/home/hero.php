@@ -9,7 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$slides = buity_get_hero_slides();
+$slides = array_values(
+	array_filter(
+		buity_get_hero_slides(),
+		function ( $slide ) {
+			$image_id = (int) ( $slide['image_id'] ?? 0 );
+			$has_text = ! empty( $slide['title_left'] ) || ! empty( $slide['subtitle_left'] ) || ! empty( $slide['title_right'] );
+			return $image_id || $has_text;
+		}
+	)
+);
+
 if ( empty( $slides ) ) {
 	return;
 }
@@ -18,37 +28,53 @@ if ( empty( $slides ) ) {
 	<div class="home-hero-slider__track">
 		<?php foreach ( $slides as $index => $slide ) : ?>
 			<?php
-			$bg_style = 'background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);';
-			if ( ! empty( $slide['image_id'] ) ) {
-				$url = wp_get_attachment_image_url( $slide['image_id'], 'buity-hero' );
-				if ( $url ) {
-					$bg_style = sprintf(
-						'background-image: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url(%s); background-size: cover; background-position: center;',
-						esc_url( $url )
-					);
-				}
-			}
-			$link = ! empty( $slide['link'] ) ? $slide['link'] : '';
-			$active = 0 === $index ? ' is-active' : '';
+			$image_id = (int) ( $slide['image_id'] ?? 0 );
+			$has_text = ! empty( $slide['title_left'] ) || ! empty( $slide['subtitle_left'] ) || ! empty( $slide['title_right'] );
+			$link      = ! empty( $slide['link'] ) ? $slide['link'] : '';
+			$active    = 0 === $index ? ' is-active' : '';
+			$slide_alt = ! empty( $slide['alt'] ) ? $slide['alt'] : __( 'Promotional slide', 'buity-theme' );
 			?>
-			<div class="home-hero-slider__slide<?php echo esc_attr( $active ); ?>" data-slide="<?php echo esc_attr( (string) $index ); ?>" style="<?php echo esc_attr( $bg_style ); ?>">
-				<?php if ( $link ) : ?><a class="home-hero-slider__slide-link" href="<?php echo esc_url( $link ); ?>"><?php endif; ?>
-				<div class="container home-hero-slider__content">
-					<div class="home-hero-slider__left">
-						<?php if ( ! empty( $slide['title_left'] ) ) : ?>
-							<h2 class="home-hero-slider__title-left"><?php echo esc_html( $slide['title_left'] ); ?></h2>
-						<?php endif; ?>
-						<?php if ( ! empty( $slide['subtitle_left'] ) ) : ?>
-							<p class="home-hero-slider__subtitle-left"><?php echo esc_html( $slide['subtitle_left'] ); ?></p>
+			<div class="home-hero-slider__slide<?php echo esc_attr( $active ); ?><?php echo $has_text ? ' home-hero-slider__slide--has-text' : ''; ?>" data-slide="<?php echo esc_attr( (string) $index ); ?>" role="group" aria-label="<?php echo esc_attr( $slide_alt ); ?>">
+				<?php if ( $image_id ) : ?>
+					<figure class="home-hero-slider__media">
+						<?php
+						echo wp_get_attachment_image(
+							$image_id,
+							'full',
+							false,
+							array(
+								'class'    => 'home-hero-slider__image',
+								'alt'      => $slide_alt,
+								'loading'  => 0 === $index ? 'eager' : 'lazy',
+								'decoding' => 'async',
+								'sizes'    => '100vw',
+							)
+						);
+						?>
+					</figure>
+				<?php endif; ?>
+
+				<?php if ( $link ) : ?>
+					<a class="home-hero-slider__slide-link" href="<?php echo esc_url( $link ); ?>" aria-label="<?php echo esc_attr( $slide_alt ); ?>"></a>
+				<?php endif; ?>
+
+				<?php if ( $has_text ) : ?>
+					<div class="container home-hero-slider__content">
+						<div class="home-hero-slider__left">
+							<?php if ( ! empty( $slide['title_left'] ) ) : ?>
+								<h2 class="home-hero-slider__title-left"><?php echo esc_html( $slide['title_left'] ); ?></h2>
+							<?php endif; ?>
+							<?php if ( ! empty( $slide['subtitle_left'] ) ) : ?>
+								<p class="home-hero-slider__subtitle-left"><?php echo esc_html( $slide['subtitle_left'] ); ?></p>
+							<?php endif; ?>
+						</div>
+						<?php if ( ! empty( $slide['title_right'] ) ) : ?>
+							<div class="home-hero-slider__right">
+								<p class="home-hero-slider__title-right"><?php echo esc_html( $slide['title_right'] ); ?></p>
+							</div>
 						<?php endif; ?>
 					</div>
-					<?php if ( ! empty( $slide['title_right'] ) ) : ?>
-						<div class="home-hero-slider__right">
-							<p class="home-hero-slider__title-right"><?php echo esc_html( $slide['title_right'] ); ?></p>
-						</div>
-					<?php endif; ?>
-				</div>
-				<?php if ( $link ) : ?></a><?php endif; ?>
+				<?php endif; ?>
 			</div>
 		<?php endforeach; ?>
 	</div>

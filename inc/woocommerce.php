@@ -27,7 +27,10 @@ add_action( 'after_setup_theme', 'buity_woocommerce_setup', 20 );
  * @return int
  */
 function buity_products_per_page() {
-	return 12;
+	$per_page = function_exists( 'buity_get_option' )
+		? (int) buity_get_option( 'shop_products_per_page', 12 )
+		: 12;
+	return max( 1, min( 100, $per_page ) );
 }
 add_filter( 'loop_shop_per_page', 'buity_products_per_page' );
 

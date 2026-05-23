@@ -46,7 +46,45 @@ function buity_theme_settings_defaults() {
 		'color_primary'            => '#009688',
 		'color_secondary'          => '#e91e63',
 		'color_tertiary'           => '#1a237e',
+		'hero_slides'              => array(),
+		'home_sections'            => array(),
+		'shop_products_per_page'   => 12,
 	);
+}
+
+/**
+ * Product source choices for home sections.
+ *
+ * @return array<string, string>
+ */
+function buity_home_section_source_choices() {
+	return array(
+		'popular'  => __( 'Popular / best sellers', 'buity-theme' ),
+		'sale'     => __( 'On sale', 'buity-theme' ),
+		'new'      => __( 'New arrivals', 'buity-theme' ),
+		'featured' => __( 'Featured products', 'buity-theme' ),
+		'category' => __( 'Product category', 'buity-theme' ),
+	);
+}
+
+/**
+ * Get hero slides from theme settings.
+ *
+ * @return array<int, array<string, mixed>>
+ */
+function buity_get_hero_slides_option() {
+	$slides = buity_get_option( 'hero_slides', array() );
+	return is_array( $slides ) ? $slides : array();
+}
+
+/**
+ * Get home sections from theme settings.
+ *
+ * @return array<int, array<string, mixed>>
+ */
+function buity_get_home_sections_option() {
+	$sections = buity_get_option( 'home_sections', array() );
+	return is_array( $sections ) ? $sections : array();
 }
 
 /**
@@ -81,6 +119,9 @@ function buity_get_option( $key, $default = null ) {
 	$settings = get_option( BUITY_THEME_SETTINGS_OPTION, array() );
 	if ( is_array( $settings ) && array_key_exists( $key, $settings ) ) {
 		$value = $settings[ $key ];
+		if ( is_array( $value ) ) {
+			return $value;
+		}
 		if ( '' !== $value && null !== $value ) {
 			return $value;
 		}
@@ -149,11 +190,23 @@ function buity_sanitize_theme_settings( $input ) {
 		? sanitize_key( wp_unslash( $_POST['buity_active_tab'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		: '';
 
-	$ints = array( 'logo_header', 'logo_footer', 'logo_site', 'quick_links_menu', 'useful_links_menu' );
+	$ints = array( 'logo_header', 'logo_footer', 'logo_site', 'quick_links_menu', 'useful_links_menu', 'shop_products_per_page' );
 	foreach ( $ints as $key ) {
 		if ( array_key_exists( $key, $input ) ) {
 			$output[ $key ] = absint( $input[ $key ] );
 		}
+	}
+
+	if ( array_key_exists( 'shop_products_per_page', $output ) ) {
+		$output['shop_products_per_page'] = max( 1, min( 100, (int) $output['shop_products_per_page'] ) );
+	}
+
+	if ( array_key_exists( 'hero_slides', $input ) && is_array( $input['hero_slides'] ) ) {
+		$output['hero_slides'] = buity_sanitize_hero_slides( $input['hero_slides'] );
+	}
+
+	if ( array_key_exists( 'home_sections', $input ) && is_array( $input['home_sections'] ) ) {
+		$output['home_sections'] = buity_sanitize_home_sections( $input['home_sections'] );
 	}
 
 	if ( 'general' === $active_tab ) {
@@ -208,6 +261,80 @@ function buity_sanitize_theme_settings( $input ) {
 }
 
 /**
+ * Sanitize hero slider slides.
+ *
+ * @param array<int, array<string, mixed>> $slides Raw slides.
+ * @return array<int, array<string, mixed>>
+ */
+function buity_sanitize_hero_slides( $slides ) {
+	$clean = array();
+
+	foreach ( $slides as $slide ) {
+		if ( ! is_array( $slide ) ) {
+			continue;
+		}
+
+		$image_id = absint( $slide['image_id'] ?? 0 );
+		if ( ! $image_id ) {
+			continue;
+		}
+
+		$clean[] = array(
+			'image_id'      => $image_id,
+			'link'          => esc_url_raw( $slide['link'] ?? '' ),
+			'alt'           => sanitize_text_field( $slide['alt'] ?? '' ),
+			'title_left'    => sanitize_text_field( $slide['title_left'] ?? '' ),
+			'subtitle_left' => sanitize_text_field( $slide['subtitle_left'] ?? '' ),
+			'title_right'   => sanitize_text_field( $slide['title_right'] ?? '' ),
+		);
+	}
+
+	return $clean;
+}
+
+/**
+ * Sanitize home page product sections.
+ *
+ * @param array<int, array<string, mixed>> $sections Raw sections.
+ * @return array<int, array<string, mixed>>
+ */
+function buity_sanitize_home_sections( $sections ) {
+	$clean   = array();
+	$sources = array_keys( buity_home_section_source_choices() );
+
+	foreach ( $sections as $section ) {
+		if ( ! is_array( $section ) ) {
+			continue;
+		}
+
+		$title = sanitize_text_field( $section['title'] ?? '' );
+		if ( '' === $title ) {
+			continue;
+		}
+
+		$source = sanitize_key( $section['source'] ?? 'popular' );
+		if ( ! in_array( $source, $sources, true ) ) {
+			$source = 'popular';
+		}
+
+		$clean[] = array(
+			'title'          => $title,
+			'source'         => $source,
+			'category_id'    => absint( $section['category_id'] ?? 0 ),
+			'limit'          => max( 1, min( 24, absint( $section['limit'] ?? 10 ) ) ),
+			'view_all_text'  => sanitize_text_field( $section['view_all_text'] ?? __( 'View All', 'buity-theme' ) ),
+			'view_all_url'   => esc_url_raw( $section['view_all_url'] ?? '' ),
+		);
+
+		if ( count( $clean ) >= 12 ) {
+			break;
+		}
+	}
+
+	return $clean;
+}
+
+/**
  * Add Theme Settings under Appearance.
  */
 function buity_theme_settings_menu() {
@@ -248,6 +375,19 @@ function buity_theme_settings_admin_assets( $hook_suffix ) {
 		array( 'jquery', 'wp-color-picker' ),
 		buity_asset_version( 'assets/js/admin-theme-options.js' ),
 		true
+	);
+
+	wp_localize_script(
+		'buity-theme-settings-admin',
+		'buityThemeSettingsAdmin',
+		array(
+			'maxHeroSlides'    => 10,
+			'maxHomeSections'  => 12,
+			'heroLabel'        => __( 'Slide', 'buity-theme' ),
+			'sectionLabel'     => __( 'Section', 'buity-theme' ),
+			'selectImage'      => __( 'Select image', 'buity-theme' ),
+			'useImage'         => __( 'Use image', 'buity-theme' ),
+		)
 	);
 }
 add_action( 'admin_enqueue_scripts', 'buity_theme_settings_admin_assets' );
@@ -428,6 +568,16 @@ function buity_theme_settings_fields() {
 				),
 			),
 		),
+		'shop' => array(
+			'shop' => array(
+				array(
+					'key'         => 'shop_products_per_page',
+					'label'       => __( 'Products per page', 'buity-theme' ),
+					'type'        => 'number',
+					'description' => __( 'Number of products shown on shop and category archives.', 'buity-theme' ),
+				),
+			),
+		),
 	);
 }
 
@@ -446,6 +596,7 @@ function buity_theme_settings_section_labels() {
 		'contact'          => __( 'Contact Information', 'buity-theme' ),
 		'social'           => __( 'Social Links', 'buity-theme' ),
 		'site_colors'      => __( 'Site Colors', 'buity-theme' ),
+		'shop'             => __( 'Shop', 'buity-theme' ),
 	);
 }
 
@@ -458,7 +609,10 @@ function buity_theme_settings_tabs() {
 	return array(
 		'general' => __( 'General', 'buity-theme' ),
 		'contact' => __( 'Contact & Social', 'buity-theme' ),
-		'colors'  => __( 'Colors', 'buity-theme' ),
+		'colors'        => __( 'Colors', 'buity-theme' ),
+		'hero_slider'   => __( 'Hero Slider', 'buity-theme' ),
+		'home_sections' => __( 'Home Sections', 'buity-theme' ),
+		'shop'          => __( 'Shop', 'buity-theme' ),
 	);
 }
 
@@ -530,6 +684,10 @@ function buity_theme_settings_render_field( $field, $values ) {
 			echo '<input type="email" class="regular-text" id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( (string) $value ) . '" />';
 			break;
 
+		case 'number':
+			echo '<input type="number" class="small-text" id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( (string) $value ) . '" min="1" max="100" step="1" />';
+			break;
+
 		default:
 			echo '<input type="text" class="regular-text" id="' . esc_attr( $id ) . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( (string) $value ) . '" />';
 			break;
@@ -540,6 +698,199 @@ function buity_theme_settings_render_field( $field, $values ) {
 	}
 
 	echo '</td></tr>';
+}
+
+/**
+ * Render one hero slide row in admin.
+ *
+ * @param int                  $index Slide index.
+ * @param array<string, mixed> $slide Slide data.
+ */
+function buity_theme_settings_render_hero_slide_row( $index, $slide ) {
+	$prefix    = BUITY_THEME_SETTINGS_OPTION . '[hero_slides][' . $index . ']';
+	$image_id  = (int) ( $slide['image_id'] ?? 0 );
+	$preview   = $image_id ? wp_get_attachment_image_url( $image_id, 'medium' ) : '';
+	$row_label = sprintf( __( 'Slide %d', 'buity-theme' ), $index + 1 );
+	?>
+	<div class="buity-repeater__item buity-hero-slide" data-index="<?php echo esc_attr( (string) $index ); ?>">
+		<div class="buity-repeater__item-head">
+			<strong><?php echo esc_html( $row_label ); ?></strong>
+			<button type="button" class="button-link buity-repeater__remove"><?php esc_html_e( 'Remove', 'buity-theme' ); ?></button>
+		</div>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Image', 'buity-theme' ); ?></th>
+				<td>
+					<div class="buity-media-field" data-field="hero-image">
+						<input type="hidden" name="<?php echo esc_attr( $prefix ); ?>[image_id]" value="<?php echo esc_attr( (string) $image_id ); ?>" />
+						<div class="buity-media-field__preview">
+							<?php if ( $preview ) : ?>
+								<img src="<?php echo esc_url( $preview ); ?>" alt="" />
+							<?php endif; ?>
+						</div>
+						<p class="buity-media-field__actions">
+							<button type="button" class="button buity-media-upload"><?php esc_html_e( 'Upload / Select', 'buity-theme' ); ?></button>
+							<button type="button" class="button buity-media-remove<?php echo $image_id ? '' : ' hidden'; ?>"><?php esc_html_e( 'Remove', 'buity-theme' ); ?></button>
+						</p>
+						<p class="description"><?php esc_html_e( 'Required for the home page slider.', 'buity-theme' ); ?></p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'Link URL', 'buity-theme' ); ?></label></th>
+				<td>
+					<input type="url" class="regular-text" name="<?php echo esc_attr( $prefix ); ?>[link]" value="<?php echo esc_attr( $slide['link'] ?? '' ); ?>" />
+					<p class="description"><?php esc_html_e( 'Optional. Wraps the slide image in a link when set.', 'buity-theme' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'Alt text', 'buity-theme' ); ?></label></th>
+				<td>
+					<input type="text" class="regular-text" name="<?php echo esc_attr( $prefix ); ?>[alt]" value="<?php echo esc_attr( $slide['alt'] ?? '' ); ?>" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<?php
+}
+
+/**
+ * Render Hero Slider settings tab.
+ *
+ * @param array<string, mixed> $values Saved settings.
+ */
+function buity_theme_settings_render_hero_slider_tab( $values ) {
+	$slides = isset( $values['hero_slides'] ) && is_array( $values['hero_slides'] ) ? $values['hero_slides'] : array();
+	?>
+	<p class="description buity-repeater__intro">
+		<?php esc_html_e( 'Home page slider: add slides here (no default images). Each slide needs an uploaded image. The slider appears on the home page only after you save at least one slide with an image.', 'buity-theme' ); ?>
+	</p>
+	<div class="buity-repeater" id="buity-hero-slides" data-repeater="hero">
+		<?php
+		if ( empty( $slides ) ) {
+			buity_theme_settings_render_hero_slide_row( 0, array() );
+		} else {
+			foreach ( $slides as $index => $slide ) {
+				buity_theme_settings_render_hero_slide_row( (int) $index, $slide );
+			}
+		}
+		?>
+	</div>
+	<p><button type="button" class="button" id="buity-add-hero-slide">+ <?php esc_html_e( 'Add Slide', 'buity-theme' ); ?></button></p>
+	<?php
+}
+
+/**
+ * Render one home section row in admin.
+ *
+ * @param int                  $index   Section index.
+ * @param array<string, mixed> $section Section data.
+ */
+function buity_theme_settings_render_home_section_row( $index, $section ) {
+	$prefix       = BUITY_THEME_SETTINGS_OPTION . '[home_sections][' . $index . ']';
+	$sources      = buity_home_section_source_choices();
+	$categories   = array( 0 => __( '— Select category —', 'buity-theme' ) );
+	$current_src  = $section['source'] ?? 'popular';
+	$category_id  = (int) ( $section['category_id'] ?? 0 );
+
+	if ( taxonomy_exists( 'product_cat' ) ) {
+		$terms = get_terms(
+			array(
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => false,
+				'number'     => 100,
+			)
+		);
+		if ( ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$categories[ (int) $term->term_id ] = $term->name;
+			}
+		}
+	}
+
+	$row_label = sprintf( __( 'Section %d', 'buity-theme' ), $index + 1 );
+	?>
+	<div class="buity-repeater__item buity-home-section" data-index="<?php echo esc_attr( (string) $index ); ?>">
+		<div class="buity-repeater__item-head">
+			<strong><?php echo esc_html( $row_label ); ?></strong>
+			<button type="button" class="button-link buity-repeater__remove"><?php esc_html_e( 'Remove', 'buity-theme' ); ?></button>
+		</div>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'Title', 'buity-theme' ); ?></label></th>
+				<td>
+					<input type="text" class="regular-text" name="<?php echo esc_attr( $prefix ); ?>[title]" value="<?php echo esc_attr( $section['title'] ?? '' ); ?>" />
+					<p class="description"><?php esc_html_e( 'Required. Shown as the heading on the home page.', 'buity-theme' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'Product source', 'buity-theme' ); ?></label></th>
+				<td>
+					<select name="<?php echo esc_attr( $prefix ); ?>[source]" class="buity-home-section-source">
+						<?php foreach ( $sources as $source_key => $source_label ) : ?>
+							<option value="<?php echo esc_attr( $source_key ); ?>" <?php selected( $current_src, $source_key ); ?>><?php echo esc_html( $source_label ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+			</tr>
+			<tr class="buity-home-section-category-row<?php echo 'category' === $current_src ? '' : ' hidden'; ?>">
+				<th scope="row"><label><?php esc_html_e( 'Category', 'buity-theme' ); ?></label></th>
+				<td>
+					<select name="<?php echo esc_attr( $prefix ); ?>[category_id]">
+						<?php foreach ( $categories as $cat_id => $cat_label ) : ?>
+							<option value="<?php echo esc_attr( (string) $cat_id ); ?>" <?php selected( $category_id, (int) $cat_id ); ?>><?php echo esc_html( $cat_label ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'Number of products', 'buity-theme' ); ?></label></th>
+				<td>
+					<input type="number" class="small-text" name="<?php echo esc_attr( $prefix ); ?>[limit]" value="<?php echo esc_attr( (string) ( $section['limit'] ?? 10 ) ); ?>" min="1" max="24" step="1" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'View All button text', 'buity-theme' ); ?></label></th>
+				<td>
+					<input type="text" class="regular-text" name="<?php echo esc_attr( $prefix ); ?>[view_all_text]" value="<?php echo esc_attr( $section['view_all_text'] ?? __( 'View All', 'buity-theme' ) ); ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label><?php esc_html_e( 'View All URL', 'buity-theme' ); ?></label></th>
+				<td>
+					<input type="url" class="regular-text" name="<?php echo esc_attr( $prefix ); ?>[view_all_url]" value="<?php echo esc_attr( $section['view_all_url'] ?? '' ); ?>" />
+					<p class="description"><?php esc_html_e( 'Leave empty to auto-link based on product source (category, sale, etc.).', 'buity-theme' ); ?></p>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<?php
+}
+
+/**
+ * Render Home Sections settings tab.
+ *
+ * @param array<string, mixed> $values Saved settings.
+ */
+function buity_theme_settings_render_home_sections_tab( $values ) {
+	$sections = isset( $values['home_sections'] ) && is_array( $values['home_sections'] ) ? $values['home_sections'] : array();
+	?>
+	<p class="description buity-repeater__intro">
+		<?php esc_html_e( 'Add product rows on the home page. Enter a title for each section, then click Save Changes (up to 12).', 'buity-theme' ); ?>
+	</p>
+	<div class="buity-repeater" id="buity-home-sections" data-repeater="home">
+		<?php
+		if ( empty( $sections ) ) {
+			buity_theme_settings_render_home_section_row( 0, array() );
+		} else {
+			foreach ( $sections as $index => $section ) {
+				buity_theme_settings_render_home_section_row( (int) $index, $section );
+			}
+		}
+		?>
+	</div>
+	<p><button type="button" class="button" id="buity-add-home-section">+ <?php esc_html_e( 'Add Section', 'buity-theme' ); ?></button></p>
+	<?php
 }
 
 /**
@@ -581,19 +932,25 @@ function buity_theme_settings_page_render() {
 			<input type="hidden" name="buity_active_tab" value="<?php echo esc_attr( $active_tab ); ?>" />
 
 			<?php
-			$tab_sections = $fields[ $active_tab ] ?? array();
-			foreach ( $tab_sections as $section_id => $section_fields ) :
-				$section_title = $sections[ $section_id ] ?? $section_id;
-				?>
-				<h2 class="title"><?php echo esc_html( $section_title ); ?></h2>
-				<table class="form-table" role="presentation">
-					<?php
-					foreach ( $section_fields as $field ) {
-						buity_theme_settings_render_field( $field, $values );
-					}
+			if ( 'hero_slider' === $active_tab ) {
+				buity_theme_settings_render_hero_slider_tab( $values );
+			} elseif ( 'home_sections' === $active_tab ) {
+				buity_theme_settings_render_home_sections_tab( $values );
+			} else {
+				$tab_sections = $fields[ $active_tab ] ?? array();
+				foreach ( $tab_sections as $section_id => $section_fields ) :
+					$section_title = $sections[ $section_id ] ?? $section_id;
 					?>
-				</table>
-			<?php endforeach; ?>
+					<h2 class="title"><?php echo esc_html( $section_title ); ?></h2>
+					<table class="form-table" role="presentation">
+						<?php
+						foreach ( $section_fields as $field ) {
+							buity_theme_settings_render_field( $field, $values );
+						}
+						?>
+					</table>
+				<?php endforeach; ?>
+			<?php } ?>
 
 			<?php submit_button(); ?>
 		</form>

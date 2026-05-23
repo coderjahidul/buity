@@ -16,16 +16,17 @@ if ( empty( $section ) || empty( $products ) ) {
 	return;
 }
 
-$section_id = isset( $section['id'] ) ? $section['id'] : 'products';
-$title      = isset( $section['title'] ) ? $section['title'] : __( 'Products', 'buity-theme' );
-$view_all   = buity_section_view_all_url( $section_id );
+$section_id    = isset( $section['id'] ) ? $section['id'] : 'products';
+$title         = isset( $section['title'] ) ? $section['title'] : __( 'Products', 'buity-theme' );
+$view_all      = buity_section_view_all_url( $section_id );
+$view_all_text = ! empty( $section['view_all_text'] ) ? $section['view_all_text'] : __( 'View All', 'buity-theme' );
 ?>
 <section class="home-section home-products home-products--<?php echo esc_attr( $section_id ); ?>">
 	<div class="container">
 		<div class="home-section__header">
 			<h2 class="home-section__title"><?php echo esc_html( $title ); ?></h2>
 			<a class="home-section__view-all" href="<?php echo esc_url( $view_all ); ?>">
-				<?php esc_html_e( 'View All', 'buity-theme' ); ?> &rsaquo;
+				<?php echo esc_html( $view_all_text ); ?> &rsaquo;
 			</a>
 		</div>
 		<div class="home-products__scroll">
