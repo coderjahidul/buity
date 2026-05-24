@@ -115,6 +115,15 @@ function buity_enqueue_assets() {
 		);
 	}
 
+	if ( class_exists( 'WooCommerce' ) && is_account_page() ) {
+		wp_enqueue_style(
+			'buity-account',
+			BUITY_THEME_URI . '/assets/css/account.css',
+			array( 'buity-main' ),
+			buity_asset_version( 'assets/css/account.css' )
+		);
+	}
+
 	if ( class_exists( 'WooCommerce' ) && is_product() ) {
 		wp_enqueue_style(
 			'buity-home',

@@ -7,12 +7,12 @@
 	/* ——— Address Tabs ——— */
 	$(document).on('click', '.bco-addr-tab', function () {
 		var $btn = $(this);
+
+		// The form toggling for 'add' is handled in form-checkout.php inline script
 		if ($btn.hasClass('bco-addr-tab--add')) {
-			window.location.href = $btn.closest('form').length
-				? (typeof wc_checkout_params !== 'undefined' ? wc_checkout_params.wc_ajax_url : '')
-				: window.location.href;
 			return;
 		}
+
 		$('.bco-addr-tab').removeClass('bco-addr-tab--active').attr('aria-selected', 'false');
 		$btn.addClass('bco-addr-tab--active').attr('aria-selected', 'true');
 	});
@@ -67,12 +67,12 @@
 
 	/* ——— Quantity Buttons ——— */
 	$(document).on('click', '.bco-qty__btn', function () {
-		var $btn    = $(this);
-		var action  = $btn.data('action');
-		var key     = $btn.data('key');
-		var $num    = $('#bco_qty_' + key);
+		var $btn = $(this);
+		var action = $btn.data('action');
+		var key = $btn.data('key');
+		var $num = $('#bco_qty_' + key);
 		var current = parseInt($num.text(), 10) || 1;
-		var next    = action === 'plus' ? current + 1 : Math.max(1, current - 1);
+		var next = action === 'plus' ? current + 1 : Math.max(1, current - 1);
 
 		if (next === current) return;
 		$num.text(next);
@@ -82,7 +82,7 @@
 
 	/* ——— Remove Item ——— */
 	$(document).on('click', '.bco-item__remove', function () {
-		var key  = $(this).data('key');
+		var key = $(this).data('key');
 		var $row = $(this).closest('.bco-item');
 		$row.fadeOut(250, function () { $row.remove(); });
 		updateCartItemQty(key, 0);
@@ -93,10 +93,10 @@
 		$.post(
 			bcoData.ajaxUrl,
 			{
-				action:   'bco_update_cart_item',
-				key:      key,
-				qty:      qty,
-				nonce:    bcoData.nonce
+				action: 'bco_update_cart_item',
+				key: key,
+				qty: qty,
+				nonce: bcoData.nonce
 			},
 			function (response) {
 				if (response && response.success) {
@@ -111,10 +111,10 @@
 	/* ——— Refresh totals in UI from AJAX response ——— */
 	function refreshTotals(data) {
 		if (!data) return;
-		if (data.subtotal)     $('[data-total="subtotal"]').html(data.subtotal);
-		if (data.discount)     $('[data-total="discount"]').html(data.discount);
-		if (data.shipping)     $('[data-total="shipping"]').html(data.shipping);
-		if (data.grand_total)  $('[data-total="grand_total"]').html(data.grand_total);
+		if (data.subtotal) $('[data-total="subtotal"]').html(data.subtotal);
+		if (data.discount) $('[data-total="discount"]').html(data.discount);
+		if (data.shipping) $('[data-total="shipping"]').html(data.shipping);
+		if (data.grand_total) $('[data-total="grand_total"]').html(data.grand_total);
 	}
 
 	/* ——— Shipping method change → update_checkout ——— */

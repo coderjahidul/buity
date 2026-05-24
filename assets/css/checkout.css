@@ -220,6 +220,127 @@
 	color: #6b4c2a;
 }
 
+/* ——— Inline Address Form ——— */
+.bco-addr-form-container {
+	margin-top: 15px;
+}
+
+.bco-form-row {
+	margin-bottom: 1rem;
+}
+
+.bco-form-row--half {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.25rem;
+}
+
+.bco-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	margin-bottom: 1rem;
+}
+
+.bco-field label,
+.bco-address-label-text {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--bco-text);
+}
+
+.bco-input,
+.bco-select,
+.bco-textarea {
+	width: 100%;
+	padding: 0.65rem 0.85rem;
+	border: 1px solid var(--bco-border);
+	border-radius: 6px;
+	font-family: var(--font-sans);
+	font-size: 0.875rem;
+	color: var(--bco-text);
+	background: #fff;
+	transition: border-color 0.2s;
+	box-sizing: border-box;
+}
+
+.bco-textarea {
+	resize: vertical;
+	min-height: 80px;
+}
+
+.bco-input:focus,
+.bco-select:focus,
+.bco-textarea:focus {
+	outline: none;
+	border-color: var(--bco-teal);
+	box-shadow: 0 0 0 3px rgba(0, 176, 200, 0.1);
+}
+
+.bco-address-label-box {
+	margin-top: 1.5rem;
+	padding: 1.5rem;
+	border: 1px dashed var(--bco-border);
+	border-radius: 8px;
+	background: #fcfcfc;
+}
+
+.bco-address-label-text {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-size: 0.8125rem;
+	color: var(--bco-muted);
+}
+
+.bco-input-label {
+	margin-bottom: 1rem;
+}
+
+.bco-address-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.75rem;
+}
+
+.bco-btn-save-addr {
+	padding: 0.5rem 1.25rem;
+	border: none;
+	border-radius: 6px;
+	background: var(--bco-teal);
+	color: #fff;
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.bco-btn-save-addr:hover {
+	background: var(--bco-teal-dark);
+}
+
+.bco-btn-cancel-addr {
+	padding: 0.5rem 1.25rem;
+	border: 1px solid var(--bco-border);
+	border-radius: 6px;
+	background: #fcfcfc;
+	color: var(--bco-text);
+	font-size: 0.875rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.bco-btn-cancel-addr:hover {
+	background: #f0f0f0;
+}
+
+@media (max-width: 600px) {
+	.bco-form-row--half {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+}
+
 /* Hide WooCommerce billing hidden fields from layout */
 .bco-billing-field {
 	display: none !important;
@@ -636,4 +757,37 @@
 	.bco-btn-back {
 		text-align: center;
 	}
+}
+
+/* ——— AJAX notices ——— */
+.bco-notice {
+	padding: 12px 18px;
+	border-radius: 8px;
+	margin-bottom: 1rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	animation: bco-slide-in 0.25s ease;
+}
+
+@keyframes bco-slide-in {
+	from { opacity: 0; transform: translateY(-8px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+
+.bco-notice--success {
+	background: #e8f5e9;
+	color: #2e7d32;
+	border-left: 4px solid #43a047;
+}
+
+.bco-notice--error {
+	background: #fdecea;
+	color: #b71c1c;
+	border-left: 4px solid #e53935;
+}
+
+/* ——— Save Address button loading state ——— */
+#bco-save-address-btn:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
 }

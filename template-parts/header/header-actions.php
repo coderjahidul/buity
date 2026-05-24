@@ -20,7 +20,11 @@ $cart_count   = class_exists( 'WooCommerce' ) && WC()->cart ? WC()->cart->get_ca
 	</a>
 
 	<a class="header-actions__login" href="<?php echo esc_url( $account_url ); ?>">
-		<?php esc_html_e( 'Login', 'buity-theme' ); ?>
+		<?php if ( is_user_logged_in() ) : ?>
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+		<?php else : ?>
+			<?php esc_html_e( 'Login', 'buity-theme' ); ?>
+		<?php endif; ?>
 	</a>
 
 	<div class="header-cart" id="header-cart">

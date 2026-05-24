@@ -1,0 +1,811 @@
+/*
+ * My Account Styles
+ */
+
+.woocommerce-account .woocommerce-MyAccount-wrapper {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin-bottom: 50px;
+    font-family: 'Poppins', sans-serif;
+    color: #4a5568;
+    background-color: #f7fafc;
+    padding: 30px;
+}
+
+/* Sidebar Navigation */
+.woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.woocommerce-MyAccount-navigation li {
+    margin-bottom: 10px;
+}
+
+.woocommerce-MyAccount-navigation li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #718096;
+    background: #fff;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.woocommerce-MyAccount-navigation li.is-active a,
+.woocommerce-MyAccount-navigation li a:hover {
+    background-color: #00a8b3;
+    color: #fff;
+    border-color: #00a8b3;
+}
+
+.woocommerce-MyAccount-navigation li a svg {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+}
+
+/* Main Content Area */
+.woocommerce-MyAccount-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Dashboard Cards */
+.buity-account-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+}
+
+.buity-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.buity-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.buity-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+.buity-btn-outline {
+    background: transparent;
+    border: 1px solid #00a8b3;
+    color: #00a8b3;
+    padding: 6px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.buity-btn-outline:hover {
+    background: #00a8b3;
+    color: #fff;
+}
+
+.buity-btn-primary {
+    background: #00a8b3;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.buity-btn-primary:hover {
+    background: #008f99;
+}
+
+.buity-btn-danger {
+    background: #fc4b5c;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    transition: background 0.3s ease;
+}
+
+.buity-btn-danger:hover {
+    background: #e53e4f;
+}
+
+/* Dashboard User Card */
+.buity-user-card {
+    text-align: center;
+}
+
+.buity-user-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #00a8b3;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 auto 15px;
+}
+
+.buity-user-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 20px;
+}
+
+.buity-user-details {
+    text-align: left;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.buity-user-details p {
+    margin: 0 0 8px;
+}
+
+.buity-user-details strong {
+    color: #2d3748;
+}
+
+/* Orders List */
+.buity-orders-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.buity-orders-tab {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.buity-orders-tab.active {
+    background: #00a8b3;
+    color: #fff;
+    border-color: #00a8b3;
+}
+
+.buity-order-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.buity-order-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 168, 179, 0.15);
+    border-color: #00a8b3;
+    color: inherit;
+    text-decoration: none;
+}
+
+.buity-order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.buity-order-card-body {
+    display: flex;
+    align-items: center;
+}
+
+.buity-order-card-img-wrap {
+    margin-right: 20px;
+}
+
+.buity-order-card-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    background: #f7fafc;
+    object-fit: cover;
+}
+
+.buity-order-info {
+    flex-grow: 1;
+}
+
+.buity-order-id {
+    font-size: 13px;
+    color: #00a8b3;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.buity-order-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.buity-order-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.buity-order-action {
+    color: #fc4b5c;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.buity-order-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.buity-order-status.processing {
+    background: #e6fffa;
+    color: #00a8b3;
+}
+
+.buity-order-status.on-hold {
+    background: #ebf8ff;
+    color: #3182ce;
+}
+
+.buity-order-date {
+    font-size: 12px;
+    color: #a0aec0;
+}
+
+/* Addresses */
+.buity-address-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.buity-address-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    background: #fff;
+}
+
+.buity-address-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.buity-address-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.buity-address-edit {
+    color: #00a8b3;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.buity-address-details {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #718096;
+}
+
+.buity-add-address-card {
+    border: 1px dashed #cbd5e0;
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #2d3748;
+    text-decoration: none;
+}
+
+.buity-add-address-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.buity-add-address-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.buity-add-address-desc {
+    font-size: 12px;
+    color: #a0aec0;
+}
+
+/* Settings Form */
+.buity-settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.buity-form-group {
+    margin-bottom: 20px;
+}
+
+.buity-form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.buity-form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #4a5568;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.buity-form-control:focus {
+    border-color: #00a8b3;
+    outline: none;
+}
+
+.buity-form-input-icon {
+    position: relative;
+}
+
+.buity-form-input-icon .buity-form-control {
+    padding-right: 40px;
+}
+
+.buity-form-input-icon svg {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    fill: #a0aec0;
+    cursor: pointer;
+}
+
+.buity-account-status {
+    border-left: 1px solid #e2e8f0;
+    padding-left: 40px;
+}
+
+.buity-status-desc {
+    font-size: 14px;
+    color: #718096;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.buity-status-desc strong {
+    color: #38a169;
+}
+
+.buity-settings-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.buity-settings-back {
+    color: #00a8b3;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.buity-settings-back svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+    fill: currentColor;
+}
+
+.buity-settings-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 5px;
+}
+
+.buity-settings-subtitle {
+    font-size: 13px;
+    color: #a0aec0;
+    margin: 0;
+}
+
+/* Form Overrides */
+.woocommerce form .form-row {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.woocommerce form .form-row label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.woocommerce form .form-row input.input-text {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #4a5568;
+    box-sizing: border-box;
+}
+
+.woocommerce form .form-row input.input-text:focus {
+    border-color: #00a8b3;
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .woocommerce-account .woocommerce-MyAccount-wrapper {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .buity-account-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .buity-address-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .buity-settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .buity-account-status {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 30px;
+    }
+
+    .buity-view-order-title-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .buity-view-order-item {
+        flex-wrap: wrap;
+    }
+}
+
+/* ========================
+   View Order Page
+   ======================== */
+.buity-view-order-header {
+    margin-bottom: 0;
+}
+
+.buity-view-order-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.buity-view-order-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0 0 8px;
+}
+
+.buity-view-order-meta {
+    font-size: 13px;
+    color: #718096;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.buity-view-order-id {
+    color: #00a8b3;
+    font-weight: 600;
+}
+
+.buity-view-order-sep {
+    margin: 0 4px;
+}
+
+/* Order Items */
+.buity-view-order-items {
+    margin-top: 20px;
+}
+
+.buity-view-order-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.buity-view-order-item-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 15px;
+    flex-shrink: 0;
+    background: #f7fafc;
+}
+
+.buity-view-order-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.buity-view-order-item-info {
+    flex-grow: 1;
+}
+
+.buity-view-order-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 3px;
+}
+
+.buity-view-order-item-qty {
+    font-size: 13px;
+    color: #a0aec0;
+}
+
+.buity-view-order-item-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+/* Order Summary */
+.buity-view-order-summary {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.buity-view-order-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.buity-view-order-summary-label {
+    font-size: 14px;
+    color: #718096;
+}
+
+.buity-view-order-summary-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.buity-view-order-total {
+    border-top: 1px solid #e2e8f0;
+    margin-top: 8px;
+    padding-top: 12px;
+}
+
+.buity-view-order-total-value {
+    color: #00a8b3;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Delivery Address */
+.buity-view-order-address {
+    margin-top: 20px;
+}
+
+.buity-view-order-address-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.buity-view-order-address-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 12px;
+}
+
+.buity-view-order-address-detail {
+    font-size: 14px;
+    color: #718096;
+    margin: 0 0 6px;
+}
+
+.buity-view-order-address-detail strong {
+    color: #2d3748;
+}
+
+.buity-view-order-address-formatted {
+    font-size: 14px;
+    color: #718096;
+    font-style: normal;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* ========================
+   Edit Address Form
+   ======================== */
+.buity-edit-address-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.buity-edit-address-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #e6fffa;
+    color: #00a8b3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.buity-edit-address-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.buity-edit-address-form .woocommerce-address-fields__field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+}
+
+.buity-edit-address-form .form-row {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.buity-edit-address-form .form-row-wide {
+    grid-column: 1 / -1;
+}
+
+.buity-edit-address-form .form-row label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.buity-edit-address-form .form-row input.input-text,
+.buity-edit-address-form .form-row select,
+.buity-edit-address-form .form-row textarea {
+    width: 100%;
+    height: 44px;
+    padding: 10px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    color: #4a5568;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.buity-edit-address-form .form-row input.input-text:focus,
+.buity-edit-address-form .form-row select:focus,
+.buity-edit-address-form .form-row textarea:focus {
+    border-color: #00a8b3;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 168, 179, 0.1);
+}
+
+.buity-edit-address-form .select2-container .select2-selection--single {
+    height: 44px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.buity-edit-address-form .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 42px;
+    color: #4a5568;
+    padding-left: 15px;
+}
+
+.buity-edit-address-form .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+}
+
+@media (max-width: 768px) {
+    .buity-edit-address-form .woocommerce-address-fields__field-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
