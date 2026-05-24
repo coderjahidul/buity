@@ -89,6 +89,32 @@ function buity_enqueue_assets() {
 		);
 	}
 
+	if ( class_exists( 'WooCommerce' ) && is_checkout() ) {
+		wp_enqueue_style(
+			'buity-checkout',
+			BUITY_THEME_URI . '/assets/css/checkout.css',
+			array( 'buity-cart' ),
+			buity_asset_version( 'assets/css/checkout.css' )
+		);
+
+		wp_enqueue_script(
+			'buity-checkout',
+			BUITY_THEME_URI . '/assets/js/checkout.js',
+			array( 'jquery', 'wc-checkout' ),
+			buity_asset_version( 'assets/js/checkout.js' ),
+			true
+		);
+
+		wp_localize_script(
+			'buity-checkout',
+			'bcoData',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'bco_cart_update' ),
+			)
+		);
+	}
+
 	if ( class_exists( 'WooCommerce' ) && is_product() ) {
 		wp_enqueue_style(
 			'buity-home',

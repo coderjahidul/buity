@@ -1,0 +1,639 @@
+/**
+ * Buity Checkout — Kiddomart design
+ */
+
+/* ——— Remove default site-main padding on checkout ——— */
+.site-main--checkout {
+	padding: 0 !important;
+}
+
+/* ——— Hide default WC coupon toggle ——— */
+.woocommerce-form-coupon-toggle {
+	display: none !important;
+}
+
+/* ——— CSS custom props ——— */
+:root {
+	--bco-teal:       #00b0c8;
+	--bco-teal-dark:  #0097ac;
+	--bco-teal-light: #e0f7fa;
+	--bco-pink:       #e91e63;
+	--bco-pink-light: #fce4ec;
+	--bco-gray-bg:    #f4f5f7;
+	--bco-card-bg:    #ffffff;
+	--bco-border:     #e0e0e0;
+	--bco-radius:     10px;
+	--bco-shadow:     0 2px 12px rgba(0,0,0,.07);
+	--bco-text:       #1a1a1a;
+	--bco-muted:      #757575;
+}
+
+/* ——— Wrapper ——— */
+.bco-wrap {
+	min-height: 60vh;
+}
+
+/* ——— Grid ——— */
+.bco-grid {
+	display: grid;
+	gap: 1.25rem;
+	margin: 0 auto;
+	align-items: start;
+}
+
+@media (min-width: 900px) {
+	.bco-grid {
+		grid-template-columns: 1fr 380px;
+		gap: 1.5rem;
+	}
+}
+
+/* ——— Columns ——— */
+.bco-col {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+/* ——— Card ——— */
+.bco-card {
+	background: var(--bco-card-bg);
+	border: 1px solid var(--bco-border);
+	border-radius: var(--bco-radius);
+	box-shadow: var(--bco-shadow);
+	padding: 1.25rem 1.35rem;
+}
+
+.bco-card__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 0.85rem;
+}
+
+.bco-card__title {
+	margin: 0 0 1rem;
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: var(--bco-text);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.bco-card__head .bco-card__title {
+	margin-bottom: 0;
+}
+
+.bco-item-count {
+	font-weight: 500;
+	font-size: 0.95rem;
+}
+
+.bco-manage-link {
+	font-size: 0.8125rem;
+	color: var(--bco-muted);
+	white-space: nowrap;
+	transition: color .2s;
+}
+
+.bco-manage-link:hover {
+	color: var(--bco-teal);
+}
+
+/* ——— Address Tabs ——— */
+.bco-addr-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.bco-addr-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.42rem 1rem;
+	border: 1.5px solid var(--bco-border);
+	border-radius: 50px;
+	background: #fff;
+	font-family: var(--font-sans);
+	font-size: 0.8375rem;
+	font-weight: 500;
+	color: var(--bco-text);
+	cursor: pointer;
+	transition: border-color .2s, background .2s, color .2s;
+}
+
+.bco-addr-tab:hover {
+	border-color: var(--bco-teal);
+	color: var(--bco-teal);
+}
+
+.bco-addr-tab--active {
+	background: var(--bco-teal);
+	border-color: var(--bco-teal);
+	color: #fff;
+}
+
+.bco-addr-tab--active:hover {
+	background: var(--bco-teal-dark);
+	border-color: var(--bco-teal-dark);
+	color: #fff;
+}
+
+.bco-addr-tab__check {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: rgba(255,255,255,.25);
+	flex-shrink: 0;
+}
+
+.bco-addr-tab--add {
+	border-style: dashed;
+	color: var(--bco-muted);
+}
+
+.bco-addr-tab--add:hover {
+	border-style: dashed;
+	color: var(--bco-teal);
+}
+
+/* ——— Address Box ——— */
+.bco-addr-box {
+	border: 1.5px solid var(--bco-border);
+	border-radius: 8px;
+	padding: 1rem 1.15rem;
+}
+
+.bco-addr-name {
+	margin: 0 0 0.55rem;
+	font-weight: 600;
+	font-size: 0.9375rem;
+	color: var(--bco-text);
+}
+
+.bco-addr-row {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0 0 0.4rem;
+	font-size: 0.875rem;
+	color: var(--bco-text);
+}
+
+.bco-addr-icon {
+	display: inline-flex;
+	align-items: center;
+	color: var(--bco-muted);
+	flex-shrink: 0;
+}
+
+.bco-addr-foot {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 0.85rem;
+}
+
+.bco-btn-edit {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.38rem 0.85rem;
+	border: 1.5px solid #d6b896;
+	border-radius: 6px;
+	background: #fffbf6;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: #7d5a35;
+	transition: border-color .2s, background .2s;
+}
+
+.bco-btn-edit:hover {
+	border-color: #b8914a;
+	background: #fff4e5;
+	color: #6b4c2a;
+}
+
+/* Hide WooCommerce billing hidden fields from layout */
+.bco-billing-field {
+	display: none !important;
+}
+
+/* ——— Payment Methods ——— */
+.bco-payment-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+}
+
+.bco-payment-method {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1.1rem;
+	border: 2px solid var(--bco-border);
+	border-radius: 8px;
+	background: #fff;
+	cursor: pointer;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--bco-text);
+	transition: border-color .2s, color .2s, background .2s;
+}
+
+.bco-payment-method--active,
+.bco-payment-method:has(.bco-payment-radio:checked) {
+	border-color: var(--bco-pink);
+	color: var(--bco-pink);
+	background: var(--bco-pink-light);
+}
+
+.bco-payment-radio {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+	width: 0;
+	height: 0;
+}
+
+.bco-payment-method__icon {
+	display: inline-flex;
+	align-items: center;
+	color: inherit;
+}
+
+.bco-payment-method__name {
+	white-space: nowrap;
+}
+
+/* ——— Shipping Select ——— */
+.bco-shipping-select {
+	width: 100%;
+	padding: 0.6rem 0.9rem;
+	border: 1.5px solid var(--bco-border);
+	border-radius: 8px;
+	font-family: var(--font-sans);
+	font-size: 0.875rem;
+	color: var(--bco-text);
+	background: #fff;
+	cursor: pointer;
+	appearance: auto;
+	transition: border-color .2s;
+}
+
+.bco-shipping-select:focus {
+	outline: none;
+	border-color: var(--bco-teal);
+	box-shadow: 0 0 0 3px rgba(0,176,200,.12);
+}
+
+/* ——— Order Items ——— */
+.bco-items {
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.bco-item {
+	display: grid;
+	grid-template-columns: 68px 1fr auto;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.65rem 0;
+	border-bottom: 1px solid var(--bco-border);
+}
+
+.bco-item:last-child {
+	border-bottom: none;
+}
+
+.bco-item__thumb {
+	width: 64px;
+	height: 64px;
+	border-radius: 6px;
+	overflow: hidden;
+	background: var(--bco-gray-bg);
+	flex-shrink: 0;
+}
+
+.bco-item__thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.bco-item__meta {
+	min-width: 0;
+}
+
+.bco-item__name {
+	margin: 0 0 0.45rem;
+	font-size: 0.8375rem;
+	font-weight: 500;
+	color: var(--bco-text);
+	line-height: 1.35;
+}
+
+/* Quantity controls */
+.bco-item__qty {
+	display: inline-flex;
+	align-items: center;
+	gap: 0;
+	border: 1.5px solid var(--bco-border);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.bco-qty__btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	background: #fff;
+	border: none;
+	font-size: 1rem;
+	line-height: 1;
+	color: var(--bco-text);
+	cursor: pointer;
+	transition: background .15s;
+}
+
+.bco-qty__btn:hover {
+	background: var(--bco-gray-bg);
+}
+
+.bco-qty__num {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 30px;
+	height: 28px;
+	font-size: 0.875rem;
+	font-weight: 600;
+	border-left: 1.5px solid var(--bco-border);
+	border-right: 1.5px solid var(--bco-border);
+	background: #fff;
+}
+
+/* Item right (remove + price) */
+.bco-item__right {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 0.4rem;
+}
+
+.bco-item__remove {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border: none;
+	background: none;
+	font-size: 1.1rem;
+	color: var(--bco-muted);
+	cursor: pointer;
+	padding: 0;
+	transition: color .2s;
+}
+
+.bco-item__remove:hover {
+	color: var(--bco-pink);
+}
+
+.bco-item__price {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--bco-text);
+	white-space: nowrap;
+}
+
+/* ——— Totals ——— */
+.bco-totals {
+	border-top: 1px solid var(--bco-border);
+	padding-top: 0.85rem;
+	margin-bottom: 1rem;
+}
+
+.bco-totals__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.3rem 0;
+	font-size: 0.875rem;
+	color: var(--bco-muted);
+}
+
+.bco-totals__row--grand {
+	padding-top: 0.5rem;
+	margin-top: 0.25rem;
+	border-top: 1px solid var(--bco-border);
+	font-size: 1rem;
+	color: var(--bco-text);
+}
+
+.bco-totals__val {
+	font-weight: 500;
+	color: var(--bco-text);
+}
+
+.bco-totals__val--discount {
+	color: #4caf50;
+}
+
+.bco-totals__val--grand {
+	font-weight: 700;
+	font-size: 1.05rem;
+	color: var(--bco-text);
+}
+
+/* ——— Coupon ——— */
+.bco-coupon {
+	border-top: 1px solid var(--bco-border);
+	padding-top: 0.85rem;
+	margin-bottom: 1rem;
+}
+
+.bco-coupon__label {
+	display: block;
+	font-size: 0.8125rem;
+	color: var(--bco-muted);
+	margin-bottom: 0.35rem;
+}
+
+.bco-coupon__links {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.75rem;
+	font-size: 0.8125rem;
+}
+
+.bco-coupon__link,
+.bco-coupon__apply {
+	color: var(--bco-muted);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	transition: color .2s;
+}
+
+.bco-coupon__apply {
+	color: var(--bco-teal);
+	font-weight: 500;
+}
+
+.bco-coupon__link:hover { color: var(--bco-text); }
+.bco-coupon__apply:hover { color: var(--bco-teal-dark); }
+
+.bco-coupon__form {
+	display: flex;
+	gap: 0.5rem;
+	margin-top: 0.65rem;
+}
+
+.bco-coupon__input {
+	flex: 1;
+	min-width: 0;
+	padding: 0.5rem 0.75rem;
+	border: 1.5px solid var(--bco-border);
+	border-radius: 6px;
+	font-family: var(--font-sans);
+	font-size: 0.875rem;
+	color: var(--bco-text);
+	transition: border-color .2s;
+}
+
+.bco-coupon__input:focus {
+	outline: none;
+	border-color: var(--bco-teal);
+}
+
+.bco-coupon__btn {
+	padding: 0.5rem 1rem;
+	border: none;
+	border-radius: 6px;
+	background: var(--bco-teal);
+	color: #fff;
+	font-family: var(--font-sans);
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background .2s;
+}
+
+.bco-coupon__btn:hover {
+	background: var(--bco-teal-dark);
+}
+
+/* ——— Actions ——— */
+.bco-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	padding-top: 0.85rem;
+	border-top: 1px solid var(--bco-border);
+}
+
+.bco-btn-back {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--bco-muted);
+	transition: color .2s;
+}
+
+.bco-btn-back:hover {
+	color: var(--bco-text);
+}
+
+.bco-btn-confirm {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.65rem 1.65rem;
+	border: none;
+	border-radius: 8px;
+	background: var(--bco-teal);
+	color: #fff;
+	font-family: var(--font-sans);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background .2s, transform .15s;
+	white-space: nowrap;
+}
+
+.bco-btn-confirm:hover {
+	background: var(--bco-teal-dark);
+	transform: translateY(-1px);
+}
+
+.bco-btn-confirm:active {
+	transform: translateY(0);
+}
+
+/* ——— Override: hide WC default payment section rendered by WC JS ——— */
+.bco-wrap #payment {
+	display: none !important;
+}
+
+/* ——— WC notices ——— */
+.bco-wrap .woocommerce-error,
+.bco-wrap .woocommerce-message,
+.bco-wrap .woocommerce-info {
+	max-width: 1100px;
+	margin: 0 auto 1rem;
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	font-size: 0.875rem;
+	list-style: none;
+}
+
+.bco-wrap .woocommerce-error {
+	background: #fdecea;
+	border-left: 4px solid #d32f2f;
+	color: #b71c1c;
+}
+
+.bco-wrap .woocommerce-message {
+	background: #e8f5e9;
+	border-left: 4px solid #388e3c;
+	color: #1b5e20;
+}
+
+/* ——— Loading overlay ——— */
+.bco-wrap .blockUI.blockOverlay {
+	border-radius: var(--bco-radius);
+}
+
+/* ——— Responsive ——— */
+@media (max-width: 600px) {
+	.bco-addr-tabs {
+		gap: 0.4rem;
+	}
+	.bco-addr-tab {
+		font-size: 0.78rem;
+		padding: 0.38rem 0.75rem;
+	}
+	.bco-actions {
+		flex-direction: column-reverse;
+		gap: 0.65rem;
+	}
+	.bco-btn-confirm {
+		width: 100%;
+		justify-content: center;
+	}
+	.bco-btn-back {
+		text-align: center;
+	}
+}

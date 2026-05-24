@@ -63,8 +63,9 @@ add_filter( 'woocommerce_output_related_products_args', 'buity_related_products_
  * Open main content wrapper.
  */
 function buity_woocommerce_wrapper_before() {
-	echo '<main id="primary" class="site-main site-main--shop">';
-	if ( ! is_product() ) {
+	$extra = is_checkout() ? ' site-main--checkout' : '';
+	echo '<main id="primary" class="site-main site-main--shop' . $extra . '">';
+	if ( ! is_product() && ! is_checkout() ) {
 		echo '<div class="container">';
 	}
 }
@@ -74,7 +75,7 @@ add_action( 'woocommerce_before_main_content', 'buity_woocommerce_wrapper_before
  * Close main content wrapper.
  */
 function buity_woocommerce_wrapper_after() {
-	if ( ! is_product() ) {
+	if ( ! is_product() && ! is_checkout() ) {
 		echo '</div>';
 	}
 	echo '</main>';
@@ -125,3 +126,53 @@ function buity_get_sale_badge( $product ) {
 
 	return '<span class="product-card__badge product-card__badge--off">' . esc_html( $label ) . '</span>';
 }
+
+/**
+ * AJAX: update cart item quantity from the custom checkout page.
+ */
+function buity_bco_update_cart_item() {
+	check_ajax_referer( 'bco_cart_update', 'nonce' );
+
+	$key = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
+	$qty = isset( $_POST['qty'] ) ? absint( $_POST['qty'] ) : 0;
+
+	if ( ! $key ) {
+		wp_send_json_error( array( 'message' => 'Invalid cart item key.' ) );
+	}
+
+	$cart = WC()->cart;
+
+	if ( 0 === $qty ) {
+		$cart->remove_cart_item( $key );
+	} else {
+		$cart->set_quantity( $key, $qty, true );
+	}
+
+	$cart->calculate_totals();
+
+	wp_send_json_success(
+		array(
+			'subtotal'    => $cart->get_cart_subtotal(),
+			'discount'    => wc_price( $cart->get_discount_total() ),
+			'shipping'    => wc_price( $cart->get_shipping_total() ),
+			'grand_total' => $cart->get_total(),
+			'count'       => $cart->get_cart_contents_count(),
+		)
+	);
+}
+add_action( 'wp_ajax_bco_update_cart_item',        'buity_bco_update_cart_item' );
+add_action( 'wp_ajax_nopriv_bco_update_cart_item', 'buity_bco_update_cart_item' );
+
+/**
+ * Body class for custom checkout page.
+ *
+ * @param array $classes Body classes.
+ * @return array
+ */
+function buity_bco_body_class( $classes ) {
+	if ( is_checkout() && ! is_wc_endpoint_url() ) {
+		$classes[] = 'buity-custom-checkout';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'buity_bco_body_class' );
