@@ -1,0 +1,272 @@
+/**
+ * Cart & checkout — theme layout and WooCommerce Blocks buttons.
+ */
+
+/* ——— Simple checkout layout ——— */
+
+.buity-simple-checkout .site-main--shop {
+	padding-top: 1.5rem;
+	padding-bottom: 3rem;
+}
+
+.buity-checkout {
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.buity-checkout__header {
+	margin-bottom: 1.75rem;
+	text-align: center;
+}
+
+.buity-checkout__title {
+	margin: 0 0 0.35rem;
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	font-weight: 700;
+	color: var(--color-text);
+}
+
+.buity-checkout__subtitle {
+	margin: 0;
+	font-size: 0.95rem;
+	color: var(--color-text-muted);
+}
+
+.buity-checkout__grid {
+	display: grid;
+	gap: 1.5rem;
+	align-items: start;
+}
+
+.buity-checkout__card {
+	background: #fff;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-card);
+	padding: 1.25rem 1.35rem;
+}
+
+.buity-checkout__card-title {
+	margin: 0 0 1.15rem;
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+.buity-checkout .woocommerce-billing-fields > h3 {
+	display: none;
+}
+
+.buity-checkout .form-row {
+	margin-bottom: 1rem;
+}
+
+.buity-checkout .form-row label {
+	display: block;
+	margin-bottom: 0.35rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--color-text);
+}
+
+.buity-checkout .form-row .required {
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+.buity-checkout .form-row .optional {
+	font-weight: 400;
+	color: var(--color-text-muted);
+}
+
+.buity-checkout input.input-text,
+.buity-checkout textarea.input-text,
+.buity-checkout select {
+	width: 100%;
+	padding: 0.65rem 0.85rem;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	font-family: var(--font-sans);
+	font-size: 0.9375rem;
+	color: var(--color-text);
+	background: #fff;
+	transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.buity-checkout input.input-text:focus,
+.buity-checkout textarea.input-text:focus,
+.buity-checkout select:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.12);
+}
+
+.buity-checkout .woocommerce-invalid input.input-text {
+	border-color: #d32f2f;
+}
+
+.buity-checkout .woocommerce-account-fields {
+	display: none;
+}
+
+/* Order summary */
+.buity-checkout__card--summary .shop_table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 1rem;
+	font-size: 0.9rem;
+}
+
+.buity-checkout__card--summary .shop_table th,
+.buity-checkout__card--summary .shop_table td {
+	padding: 0.55rem 0;
+	border-bottom: 1px solid var(--color-border);
+	vertical-align: top;
+}
+
+.buity-checkout__card--summary .shop_table thead th {
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--color-text-muted);
+}
+
+.buity-checkout__card--summary .shop_table .product-name {
+	font-weight: 500;
+}
+
+.buity-checkout__card--summary .shop_table .product-total,
+.buity-checkout__card--summary .shop_table tfoot td {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.buity-checkout__card--summary .shop_table tfoot th {
+	font-weight: 500;
+	text-align: left;
+}
+
+.buity-checkout__card--summary .shop_table .order-total th,
+.buity-checkout__card--summary .shop_table .order-total td {
+	padding-top: 0.85rem;
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: var(--color-text);
+	border-bottom: none;
+}
+
+.buity-checkout__card--summary .shop_table .order-total td {
+	color: var(--color-primary);
+}
+
+/* Payment */
+.buity-checkout #payment {
+	background: transparent;
+	border-radius: 0;
+}
+
+.buity-checkout #payment ul.payment_methods {
+	margin: 0 0 1rem;
+	padding: 0;
+	list-style: none;
+	border: none;
+}
+
+.buity-checkout #payment ul.payment_methods li {
+	padding: 0.75rem 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.buity-checkout #payment ul.payment_methods li:last-child {
+	border-bottom: none;
+}
+
+.buity-checkout #payment div.payment_box {
+	margin: 0.5rem 0 0;
+	padding: 0.75rem;
+	background: var(--color-grey-bg);
+	border-radius: var(--radius);
+	font-size: 0.875rem;
+	color: var(--color-text-muted);
+}
+
+.buity-checkout #payment .place-order {
+	margin: 0;
+	padding: 0;
+}
+
+.buity-checkout #place_order {
+	display: block;
+	width: 100%;
+	padding: 0.85rem 1.25rem;
+	border: none;
+	border-radius: var(--radius);
+	background: var(--color-primary);
+	color: #fff;
+	font-family: var(--font-sans);
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background var(--transition);
+}
+
+.buity-checkout #place_order:hover,
+.buity-checkout #place_order:focus {
+	background: var(--color-primary-dark);
+}
+
+.buity-checkout .woocommerce-terms-and-conditions-wrapper {
+	margin-bottom: 1rem;
+	font-size: 0.875rem;
+}
+
+.buity-checkout .woocommerce-privacy-policy-text {
+	font-size: 0.8125rem;
+	color: var(--color-text-muted);
+	margin-bottom: 0.75rem;
+}
+
+.buity-checkout .woocommerce-error,
+.buity-checkout .woocommerce-message,
+.buity-checkout .woocommerce-info {
+	margin-bottom: 1rem;
+	padding: 0.75rem 1rem;
+	border-radius: var(--radius);
+	font-size: 0.875rem;
+	list-style: none;
+}
+
+.buity-checkout .woocommerce-error {
+	background: #fdecea;
+	border-left: 3px solid #d32f2f;
+	color: #b71c1c;
+}
+
+@media (min-width: 768px) {
+	.buity-checkout__grid {
+		grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+		gap: 1.75rem;
+	}
+
+	.buity-checkout__header {
+		text-align: left;
+	}
+}
+
+/* WooCommerce Blocks — cart page buttons */
+.wc-block-cart__submit-button.contained,
+.wc-block-components-button.wc-block-cart__submit-button {
+	background-color: var(--color-primary) !important;
+	border-color: var(--color-primary) !important;
+	color: #fff !important;
+}
+
+.wc-block-cart__submit-button.contained:hover,
+.wc-block-cart__submit-button.contained:focus,
+.wc-block-components-button.wc-block-cart__submit-button:hover,
+.wc-block-components-button.wc-block-cart__submit-button:focus {
+	background-color: var(--color-primary-dark) !important;
+	border-color: var(--color-primary-dark) !important;
+	color: #fff !important;
+}

@@ -80,6 +80,15 @@ function buity_enqueue_assets() {
 		);
 	}
 
+	if ( class_exists( 'WooCommerce' ) && ( is_cart() || is_checkout() ) ) {
+		wp_enqueue_style(
+			'buity-cart',
+			BUITY_THEME_URI . '/assets/css/cart.css',
+			array( 'buity-main' ),
+			buity_asset_version( 'assets/css/cart.css' )
+		);
+	}
+
 	if ( class_exists( 'WooCommerce' ) && is_product() ) {
 		wp_enqueue_style(
 			'buity-home',
