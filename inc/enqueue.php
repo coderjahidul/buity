@@ -89,6 +89,21 @@ function buity_enqueue_assets() {
 		);
 	}
 
+	if ( class_exists( 'WooCommerce' ) && is_cart() ) {
+		wp_enqueue_style(
+			'buity-home',
+			BUITY_THEME_URI . '/assets/css/home.css',
+			array( 'buity-cart' ),
+			buity_asset_version( 'assets/css/home.css' )
+		);
+		wp_enqueue_style(
+			'buity-shop',
+			BUITY_THEME_URI . '/assets/css/shop.css',
+			array( 'buity-home' ),
+			buity_asset_version( 'assets/css/shop.css' )
+		);
+	}
+
 	if ( class_exists( 'WooCommerce' ) && is_checkout() ) {
 		wp_enqueue_style(
 			'buity-checkout',
@@ -169,6 +184,8 @@ function buity_enqueue_assets() {
 			'buity-cart',
 			'buityCart',
 			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'bco_cart_update' ),
 				'i18n' => array(
 					'success' => esc_html__( 'Success!', 'buity-theme' ),
 				),

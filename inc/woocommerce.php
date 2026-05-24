@@ -159,6 +159,12 @@ function buity_bco_update_cart_item()
 
 	$cart->calculate_totals();
 
+	$cart_item = $cart->get_cart_item($key);
+	$item_subtotal = '';
+	if ($cart_item) {
+		$item_subtotal = apply_filters('woocommerce_cart_item_subtotal', $cart->get_product_subtotal($cart_item['data'], $cart_item['quantity']), $cart_item, $key);
+	}
+
 	wp_send_json_success(
 		array(
 			'subtotal' => $cart->get_cart_subtotal(),
@@ -166,6 +172,7 @@ function buity_bco_update_cart_item()
 			'shipping' => wc_price($cart->get_shipping_total()),
 			'grand_total' => $cart->get_total(),
 			'count' => $cart->get_cart_contents_count(),
+			'item_subtotal' => $item_subtotal,
 		)
 	);
 }
